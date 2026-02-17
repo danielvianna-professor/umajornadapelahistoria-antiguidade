@@ -1,0 +1,406 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Antiguidade & Pré‑História • ENEM</title>
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">A</div>
+        <div>
+          <h1>Antiguidade & Pré‑História • ENEM</h1>
+          <p id="brandSub">Offline • Escola Estadual Pedro Evangelista Dinis</p>
+        </div>
+      </div>
+      <div class="pill" id="whoami">Visitante</div>
+    </header>
+
+    <!-- WELCOME -->
+    <section class="screen active" id="screen-welcome">
+      <div class="grid cols-2" style="margin-top:14px;">
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>Bem‑vindo(a)!</h2>
+              <p class="sub">Material de apoio para o Ensino Médio • foco ENEM</p>
+            </div>
+            <span class="tag">📚 Offline</span>
+          </div>
+          <div class="bd">
+            <p style="margin:0; line-height:1.5; color:var(--muted)">
+              Obrigado por utilizar este aplicativo.<br/>
+              Desejamos que ele seja útil em sua caminhada rumo ao sucesso no ENEM 🚀
+            </p>
+            <hr class="sep"/>
+            <div class="notice">
+              <b>Uso exclusivo</b> dos alunos da <u>Escola Estadual Pedro Evangelista Dinis</u>, sob orientação do <u>professor Daniel Vianna</u>.
+            </div>
+            <div style="margin-top:12px;">
+              <label class="small">Como você quer ser chamado(a)?</label><br/>
+              <input id="studentName" placeholder="Digite seu nome" style="margin-top:8px; width:100%; padding:12px; border-radius:16px; border:1px solid var(--stroke); background: rgba(16,31,58,.55); color: var(--text); outline:none;" />
+              <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                <button class="btn" id="btnStart">Entrar</button>
+                <button class="btn secondary" id="btnGuest">Continuar como visitante</button>
+              </div>
+              <p class="small" style="margin:10px 0 0">Seu progresso fica salvo no aparelho (modo offline).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>O que tem aqui</h2>
+              <p class="sub">Linha do tempo, mapas, módulos completos, quiz e gamificação</p>
+            </div>
+            <span class="tag">🎮 XP & Medalhas</span>
+          </div>
+          <div class="bd">
+            <div class="list">
+              <div class="item">
+                <h4>🕰️ Linha do tempo interativa</h4>
+                <p>Eventos por eras, com leitura guiada e metas de estudo.</p>
+              </div>
+              <div class="item">
+                <h4>🗺️ Mapas animados</h4>
+                <p>Rotas de migração e localização de civilizações (interativo).</p>
+              </div>
+              <div class="item">
+                <h4>🧠 Quiz estilo ENEM</h4>
+                <p>Banco de questões + explicações e XP por acerto.</p>
+              </div>
+              <div class="item">
+                <h4>📄 PDFs e 🎧 áudio‑aulas</h4>
+                <p>Biblioteca offline para revisão e estudo.</p>
+              </div>
+            </div>
+            <hr class="sep"/>
+            <button class="btn ghost" id="btnTeacherFromWelcome">👨‍🏫 Área do professor</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOME -->
+    <section class="screen" id="screen-home">
+      <div class="grid cols-2" style="margin-top:14px;">
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>Seu painel</h2>
+              <p class="sub">Missões rápidas para avançar</p>
+            </div>
+            <span class="tag" id="levelTag">Nível 1</span>
+          </div>
+          <div class="bd">
+            <div class="kpi">
+              <div class="box"><div class="v" id="kpiXP">0</div><div class="l">XP total</div></div>
+              <div class="box"><div class="v" id="kpiCorrect">0</div><div class="l">Acertos no quiz</div></div>
+              <div class="box"><div class="v" id="kpiBadges">0</div><div class="l">Medalhas</div></div>
+            </div>
+
+            <div style="margin-top:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                <div>
+                  <b id="levelTitle">Iniciante do Tempo</b><br/>
+                  <span class="small" id="nextLevelText">Próximo nível em 50 XP</span>
+                </div>
+                <span class="tag" id="streakTag">Sequência: 0</span>
+              </div>
+              <div class="progress" style="margin-top:10px;"><div id="levelBar"></div></div>
+            </div>
+
+            <hr class="sep"/>
+
+            <div class="list">
+              <div class="item">
+                <h4>🎯 Missão do dia</h4>
+                <p id="dailyMission">Leia 3 eventos da linha do tempo e responda 1 quiz.</p>
+              </div>
+              <div class="item">
+                <h4>⚡ Dica ENEM</h4>
+                <p>Procure relações: <b>rio → agricultura → excedente → Estado</b>. Cai muito para Egito e Mesopotâmia.</p>
+              </div>
+            </div>
+          </div>
+          <div class="ft">
+            <button class="btn" data-go="timeline">🕰️ Linha do tempo</button>
+            <button class="btn secondary" data-go="quiz">🧠 Fazer quiz</button>
+            <button class="btn ghost" data-go="civilizations">🏛️ Civilizações</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>Biblioteca rápida</h2>
+              <p class="sub">PDFs e áudio‑aulas offline</p>
+            </div>
+            <span class="tag">📌 Revisão</span>
+          </div>
+          <div class="bd">
+            <div class="list" id="libraryMini"></div>
+            <hr class="sep"/>
+            <div class="small">Dica: abra um PDF e faça um quiz em seguida para fixar.</div>
+          </div>
+          <div class="ft">
+            <button class="btn secondary" data-go="pdfs">📄 Ver PDFs</button>
+            <button class="btn secondary" data-go="audio">🎧 Áudio‑aulas</button>
+            <button class="btn ghost" data-go="teacher">👨‍🏫 Professor</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="screen" id="screen-timeline">
+      <div class="card" style="margin-top:14px;">
+        <div class="hd">
+          <div>
+            <h2>🕰️ Linha do tempo</h2>
+            <p class="sub">Filtre por era e marque como “lido” para ganhar XP</p>
+          </div>
+          <span class="tag" id="timelineReadTag">Lidos: 0</span>
+        </div>
+        <div class="bd">
+          <div class="mapControls" id="timelineFilters"></div>
+          <div class="list" id="timelineList" style="margin-top:12px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAPS -->
+    <section class="screen" id="screen-maps">
+      <div class="grid cols-2" style="margin-top:14px;">
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>🗺️ Migrações humanas</h2>
+              <p class="sub">Selecione uma rota para ver a animação</p>
+            </div>
+            <span class="tag" id="routeTag">Rota</span>
+          </div>
+          <div class="bd">
+            <div class="mapWrap" id="migrationMap"></div>
+            <div class="mapControls" id="routeButtons"></div>
+            <div class="small" id="routeBlurb" style="margin-top:10px;"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>📍 Civilizações no mapa</h2>
+              <p class="sub">Clique em um marcador para abrir o módulo</p>
+            </div>
+            <span class="tag">Interativo</span>
+          </div>
+          <div class="bd">
+            <div class="mapWrap" id="civMap"></div>
+            <div class="routeLegend" id="civLegend"></div>
+            <p class="small" style="margin-top:10px;">As posições são aproximadas para fins didáticos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CIVILIZATIONS -->
+    <section class="screen" id="screen-civilizations">
+      <div class="card" style="margin-top:14px;">
+        <div class="hd">
+          <div>
+            <h2>🏛️ Civilizações</h2>
+            <p class="sub">Conteúdo completo + mapa e foco ENEM</p>
+          </div>
+          <span class="tag">Módulos</span>
+        </div>
+        <div class="bd">
+          <div class="list" id="civList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="screen" id="screen-quiz">
+      <div class="grid cols-2" style="margin-top:14px;">
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>🧠 Quiz (estilo ENEM)</h2>
+              <p class="sub">Ganhe XP por acertos • explicações incluídas</p>
+            </div>
+            <span class="tag" id="quizTag">0/0</span>
+          </div>
+          <div class="bd">
+            <div class="small" id="quizTopic"></div>
+            <h3 style="margin:6px 0 0; font-size:16px" id="quizQ"></h3>
+            <div class="quizOpts" id="quizOpts"></div>
+            <div class="notice" id="quizExplain" style="display:none; margin-top:12px;"></div>
+            <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+              <button class="btn secondary" id="btnQuizNext">Próxima</button>
+              <button class="btn ghost" id="btnQuizRestart">Reiniciar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>🏅 Medalhas</h2>
+              <p class="sub">Conquistas ao estudar e fazer quizzes</p>
+            </div>
+            <span class="tag" id="badgesTag">0</span>
+          </div>
+          <div class="bd">
+            <div class="list" id="badgeList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PDFs -->
+    <section class="screen" id="screen-pdfs">
+      <div class="grid cols-2" style="margin-top:14px;">
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>📄 Biblioteca de PDFs</h2>
+              <p class="sub">Abra para revisar (funciona offline)</p>
+            </div>
+            <span class="tag" id="pdfOpenTag">Abertos: 0</span>
+          </div>
+          <div class="bd">
+            <div class="list" id="pdfList"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>Visualizador</h2>
+              <p class="sub">Clique em um PDF para abrir aqui</p>
+            </div>
+            <span class="tag">Leitura</span>
+          </div>
+          <div class="bd">
+            <iframe id="pdfFrame" title="PDF" style="width:100%; height:70vh; border:1px solid var(--stroke); border-radius:16px; background:#0b1220;"></iframe>
+            <p class="small" style="margin-top:10px;">Se o PDF não aparecer, abra pelo botão “Abrir em nova aba”.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUDIO -->
+    <section class="screen" id="screen-audio">
+      <div class="card" style="margin-top:14px;">
+        <div class="hd">
+          <div>
+            <h2>🎧 Áudio‑aulas</h2>
+            <p class="sub">Ouça revisões rápidas (offline)</p>
+          </div>
+          <span class="tag">Player</span>
+        </div>
+        <div class="bd">
+          <div class="list" id="audioList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEACHER -->
+    <section class="screen" id="screen-teacher">
+      <div class="grid cols-2" style="margin-top:14px;">
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>👨‍🏫 Área do Professor</h2>
+              <p class="sub">Acesso protegido por senha</p>
+            </div>
+            <span class="tag">Restrito</span>
+          </div>
+          <div class="bd" id="teacherGate">
+            <p class="small">Digite a senha para acessar o painel do professor.</p>
+            <input id="teacherPass" type="password" placeholder="Senha" style="margin-top:8px; width:100%; padding:12px; border-radius:16px; border:1px solid var(--stroke); background: rgba(16,31,58,.55); color: var(--text); outline:none;" />
+            <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+              <button class="btn" id="btnTeacherLogin">Entrar</button>
+              <button class="btn secondary" id="btnTeacherHint">Dica</button>
+            </div>
+            <p class="small" style="margin-top:10px;">⚠️ Recomendação: altere a senha no arquivo <b>app.js</b> antes de distribuir.</p>
+          </div>
+
+          <div class="bd" id="teacherPanel" style="display:none;">
+            <div class="kpi">
+              <div class="box"><div class="v" id="tTotalUsers">0</div><div class="l">Perfis no aparelho</div></div>
+              <div class="box"><div class="v" id="tTotalXP">0</div><div class="l">XP total</div></div>
+              <div class="box"><div class="v" id="tTotalQuiz">0</div><div class="l">Quizzes respondidos</div></div>
+            </div>
+            <hr class="sep"/>
+            <div class="list" id="tUsersList"></div>
+            <hr class="sep"/>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn secondary" id="btnExportCSV">⬇️ Exportar CSV</button>
+              <button class="btn ghost" id="btnTeacherLogout">Sair</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd">
+            <div>
+              <h2>Modo Professor (projeção)</h2>
+              <p class="sub">Tela limpa para aula</p>
+            </div>
+            <span class="tag">🖥️</span>
+          </div>
+          <div class="bd">
+            <div class="notice">
+              <b>Como usar:</b> na sala, abra “Linha do tempo” ou “Mapas” e clique em “Modo projeção”.
+              Isso reduz distrações e aumenta a legibilidade.
+            </div>
+            <hr class="sep"/>
+            <div class="list">
+              <div class="item">
+                <h4>📌 Sugestão de aula (50 min)</h4>
+                <p>10 min: Revolução Agrícola • 15 min: Mesopotâmia/Egito • 15 min: Quiz coletivo • 10 min: revisão PDF.</p>
+              </div>
+              <div class="item">
+                <h4>🎯 Habilidade ENEM</h4>
+                <p>Comparar formas de organização social, política e econômica em diferentes contextos históricos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+      <div class="sheet">
+        <div class="sheet-hd">
+          <h3 id="modalTitle">Detalhes</h3>
+          <button class="btn ghost" id="modalClose">Fechar ✕</button>
+        </div>
+        <div class="sheet-bd" id="modalBody"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="navbar">
+    <div class="navwrap">
+      <button class="navbtn active" data-nav="home">Início</button>
+      <button class="navbtn" data-nav="timeline">Tempo</button>
+      <button class="navbtn" data-nav="maps">Mapas</button>
+      <button class="navbtn" data-nav="quiz">Quiz</button>
+      <button class="navbtn" data-nav="civilizations">Civiliz.</button>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
